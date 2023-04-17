@@ -1,0 +1,62 @@
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
+public class FaturamentoMensal {
+
+    public static void main(String[] args) {
+        // Ler o arquivo JSON que contém os dados de faturamento diário
+        Gson gson = new Gson();
+        try {
+            JsonArray jsonFaturamento = gson.fromJson(new FileReader("faturamento.json"), JsonArray.class);
+            List<BigDecimal> faturamentoDiario = new ArrayList<>();
+            BigDecimal somaFaturamento = BigDecimal.ZERO;
+            for (int i = 0; i < jsonFaturamento.size(); i++) {
+                JsonObject diaFaturamento = jsonFaturamento.get(i).getAsJsonObject();
+                BigDecimal valorFaturamento = diaFaturamento.get("valor").getAsBigDecimal();
+                faturamentoDiario.add(valorFaturamento);
+                somaFaturamento = somaFaturamento.add(valorFaturamento);
+            }
+
+            // Calcular o menor valor de faturamento diário
+            BigDecimal menorFaturamento = faturamentoDiario.get(0);
+            for (int i = 1; i < faturamentoDiario.size(); i++) {
+                if (faturamentoDiario.get(i).compareTo(menorFaturamento) < 0) {
+                    menorFaturamento = faturamentoDiario.get(i);
+                }
+            }
+
+            // Calcular o maior valor de faturamento diário
+            BigDecimal maiorFaturamento = faturamentoDiario.get(0);
+            for (int i = 1; i < faturamentoDiario.size(); i++) {
+                if (faturamentoDiario.get(i).compareTo(maiorFaturamento) > 0) {
+                    maiorFaturamento = faturamentoDiario.get(i);
+                }
+            }
+
+            // Calcular a média de faturamento diário
+            BigDecimal mediaFaturamento = somaFaturamento.divide(BigDecimal.valueOf(faturamentoDiario.size()), 2, BigDecimal.ROUND_HALF_UP);
+
+            // Contar o número de dias em que o valor de faturamento diário foi superior à média mensal
+            int diasAcimaMedia = 0;
+            for (int i = 0; i < faturamentoDiario.size(); i++) {
+                if (faturamentoDiario.get(i).compareTo(mediaFaturamento) > 0) {
+                    diasAcimaMedia++;
+                }
+            }
+
+            // Imprimir os resultados
+            System.out.println("Menor valor de faturamento diário: " + menorFaturamento);
+            System.out.println("Maior valor de faturamento diário: " + maiorFaturamento);
+            System.out.println("Número de dias com faturamento diário acima da média mensal: " + diasAcimaMedia);
+        } catch (FileNotFoundException e) {
+            System.err.println("Arquivo de faturamento não encontrado!");
+        }
+    }
+}
