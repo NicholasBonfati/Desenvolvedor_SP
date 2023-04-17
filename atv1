@@ -1,0 +1,17 @@
+/* 1) Observe o trecho de código abaixo:
+
+int INDICE = 13, SOMA = 0, K = 0;
+
+enquanto K < INDICE faça
+{
+K = K + 1;
+SOMA = SOMA + K;
+}
+
+imprimir(SOMA);
+
+Ao final do processamento, qual será o valor da variável SOMA?*/
+
+// Dentro do laço de repetição, a variável K é incrementada em 1 a cada iteração, e SOMA é atualizada com o valor de SOMA + K. O laço continua executando até que a condição K < INDICE não seja mais satisfeita.
+
+// Dessa forma, o valor de SOMA ao final do processamento será a soma dos números inteiros de 1 a 13, que é igual a 91. Portanto, o valor impresso será 91.
