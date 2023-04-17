@@ -1,0 +1,18 @@
+public class Distribuidora {
+    public static void main(String[] args) {
+        double valorTotal = 67_836.43 + 36_678.66 + 29_229.88 + 27_165.48 + 19_849.53;
+
+        double percentualSP = (67_836.43 / valorTotal) * 100;
+        double percentualRJ = (36_678.66 / valorTotal) * 100;
+        double percentualMG = (29_229.88 / valorTotal) * 100;
+        double percentualES = (27_165.48 / valorTotal) * 100;
+        double percentualOutros = (19_849.53 / valorTotal) * 100;
+
+        System.out.println("Percentual de representação por estado:");
+        System.out.printf("SP: %.2f%%\n", percentualSP);
+        System.out.printf("RJ: %.2f%%\n", percentualRJ);
+        System.out.printf("MG: %.2f%%\n", percentualMG);
+        System.out.printf("ES: %.2f%%\n", percentualES);
+        System.out.printf("Outros: %.2f%%\n", percentualOutros);
+    }
+}
